@@ -9,7 +9,13 @@ import {
 } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-import { saveBook, searchGoogleBooks } from '../utils/API';
+// - Adding the useMutation hook to execute the SAVE_BOOK mutation
+import { useMutation } from "@apollo/client";
+// - Commenting out the following line
+// import { saveBook, searchGoogleBooks } from '../utils/API';
+// - Importing the SAVE_BOOK mutation
+import { searchGoogleBooks } from "../utils/API";
+import { SAVE_BOOK } from "../utils/mutations";
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 const SearchBooks = () => {
@@ -20,6 +26,9 @@ const SearchBooks = () => {
 
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
+
+  // - Defining the SAVE_BOOK useMutation
+  const [saveBook] = useMutation(SAVE_BOOK);
 
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
