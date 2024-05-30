@@ -4,10 +4,12 @@ import React from "react";
 // - Removing the useEffect
 // import { useState, useEffect } from 'react';
 import {
+  // - Importing Jumbotron and CardColumns
+  Jumbotron,
+  CardColumns,
   Container,
   Card,
   Button,
-  Row,
   Col
 } from 'react-bootstrap';
 // - Using the useQuery() Hook to execute the GET_ME query
@@ -102,18 +104,18 @@ import { removeBookId } from '../utils/localStorage';
 
   return (
     <>
-      <div fluid className="text-light bg-dark p-5">
+      <Jumbotron fluid className="text-light bg-dark p-5">
         <Container>
           <h1>Viewing saved books!</h1>
         </Container>
-      </div>
+      </Jumbotron>
       <Container>
         <h2 className='pt-5'>
           {userData.savedBooks.length
             ? `Viewing ${userData.savedBooks.length} saved ${userData.savedBooks.length === 1 ? 'book' : 'books'}:`
             : 'You have no saved books!'}
         </h2>
-        <Row>
+        <CardColumns>
           {userData.savedBooks.map((book) => {
             return (
               <Col md="4">
@@ -131,7 +133,7 @@ import { removeBookId } from '../utils/localStorage';
               </Col>
             );
           })}
-        </Row>
+        </CardColumns>
       </Container>
     </>
   );

@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import {
+  // - Importing Jumbotron and CardColumns
+  Jumbotron,
   Container,
   Col,
   Form,
   Button,
   Card,
-  Row
+  CardColumns
 } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
@@ -74,18 +76,21 @@ const SearchBooks = () => {
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
 
     // get token
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
+    // const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-    if (!token) {
-      return false;
-    }
+    // if (!token) {
+    //   return false;
+    // }
 
-    try {
-      const response = await saveBook(bookToSave, token);
+    // try {
+    //   const response = await saveBook(bookToSave, token);
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+    //   if (!response.ok) {
+    //     throw new Error('something went wrong!');
+    //   }
+
+    try{
+      await saveBook({ variables: { input: bookToSave} });
 
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
@@ -96,11 +101,11 @@ const SearchBooks = () => {
 
   return (
     <>
-      <div className="text-light bg-dark p-5">
+      <Jumbotron className="text-light bg-dark p-5">
         <Container>
           <h1>Search for Books!</h1>
           <Form onSubmit={handleFormSubmit}>
-            <Row>
+            <Form.Row>
               <Col xs={12} md={8}>
                 <Form.Control
                   name='searchInput'
@@ -116,10 +121,10 @@ const SearchBooks = () => {
                   Submit Search
                 </Button>
               </Col>
-            </Row>
+            </Form.Row>
           </Form>
         </Container>
-      </div>
+      </Jumbotron>
 
       <Container>
         <h2 className='pt-5'>
@@ -127,7 +132,7 @@ const SearchBooks = () => {
             ? `Viewing ${searchedBooks.length} results:`
             : 'Search for a book to begin'}
         </h2>
-        <Row>
+        <CardColumns>
           {searchedBooks.map((book) => {
             return (
               <Col md="4" key={book.bookId}>
@@ -154,7 +159,7 @@ const SearchBooks = () => {
               </Col>
             );
           })}
-        </Row>
+        </CardColumns>
       </Container>
     </>
   );
