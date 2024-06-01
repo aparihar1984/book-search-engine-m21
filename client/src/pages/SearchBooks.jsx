@@ -1,22 +1,19 @@
 import { useState, useEffect } from 'react';
 import {
-  // - Importing Jumbotron and CardColumns
-  Jumbotron,
   Container,
   Col,
   Form,
   Button,
   Card,
-  CardColumns
+  Row
 } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
 // - Adding the useMutation hook to execute the SAVE_BOOK mutation
 import { useMutation } from "@apollo/client";
 // - Commenting out the following line
-// import { saveBook, searchGoogleBooks } from '../utils/API';
+import { searchGoogleBooks } from '../utils/API';
 // - Importing the SAVE_BOOK mutation
-import { searchGoogleBooks } from "../utils/API";
 import { SAVE_BOOK } from "../utils/mutations";
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
@@ -101,11 +98,11 @@ const SearchBooks = () => {
 
   return (
     <>
-      <Jumbotron className="text-light bg-dark p-5">
+      <div className="text-light bg-dark p-5">
         <Container>
           <h1>Search for Books!</h1>
           <Form onSubmit={handleFormSubmit}>
-            <Form.Row>
+            <Row>
               <Col xs={12} md={8}>
                 <Form.Control
                   name='searchInput'
@@ -121,10 +118,10 @@ const SearchBooks = () => {
                   Submit Search
                 </Button>
               </Col>
-            </Form.Row>
+            </Row>
           </Form>
         </Container>
-      </Jumbotron>
+      </div>
 
       <Container>
         <h2 className='pt-5'>
@@ -132,7 +129,7 @@ const SearchBooks = () => {
             ? `Viewing ${searchedBooks.length} results:`
             : 'Search for a book to begin'}
         </h2>
-        <CardColumns>
+        <Row>
           {searchedBooks.map((book) => {
             return (
               <Col md="4" key={book.bookId}>
@@ -159,7 +156,7 @@ const SearchBooks = () => {
               </Col>
             );
           })}
-        </CardColumns>
+        </Row>
       </Container>
     </>
   );
